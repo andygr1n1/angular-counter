@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import {
+  increment,
+  decrement,
+  reset,
+} from 'src/app/redux/actions/counter.actions';
+import { ICounterState } from 'src/app/redux/interfaces';
 
 @Component({
   selector: 'app-counter',
@@ -7,24 +13,24 @@ import { Observable } from 'rxjs';
   styleUrls: ['./counter.component.scss'],
 })
 export class CounterComponent implements OnInit {
-  count$: Observable<number> | undefined;
+  count: number | undefined;
 
-  count = 0;
-
-  constructor() {
-    // TODO: Connect `this.count$` stream to the current store `count` state
+  constructor(private store: Store<{ counter: ICounterState }>) {
+    store.select('counter').subscribe((counter) => {
+      this.count = counter.count;
+    });
   }
 
   increment() {
-    // TODO: Dispatch an increment action
+    this.store.dispatch(increment());
   }
 
   decrement() {
-    // TODO: Dispatch a decrement action
+    this.store.dispatch(decrement());
   }
 
   reset() {
-    // TODO: Dispatch a reset action
+    this.store.dispatch(reset());
   }
 
   ngOnInit(): void {}

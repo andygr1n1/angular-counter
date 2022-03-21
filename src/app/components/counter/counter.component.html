@@ -3,13 +3,21 @@
   <h1>Super Counter</h1>
   <div class="flex gap-5">
     <button
+      (click)="increment()"
       class="cursor-pointer py-2 px-3 rounded-md outline-none focus:outline-none"
     >
       +</button
     ><button
+      (click)="decrement()"
       class="cursor-pointer py-2 px-3 rounded-md outline-none focus:outline-none"
     >
       -
+    </button>
+    <button
+      (click)="reset()"
+      class="cursor-pointer py-2 px-3 rounded-md outline-none focus:outline-none"
+    >
+      reset
     </button>
   </div>
 </div>
