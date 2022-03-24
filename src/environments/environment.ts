@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  SRV_HASURA: 'https://srv-hasura-superheroes.herokuapp.com/v1/graphql',
+  // SRV_HASURA: 'http://localhost:8088/v1/graphql',
 };
 
 /*

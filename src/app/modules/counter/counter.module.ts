@@ -6,11 +6,13 @@ import {
   counterReducer,
 } from './store/reducers/counter.reducer';
 import { CommonModule } from '@angular/common';
+import { GraphQLModule } from 'src/graphql/graphql.module';
 
 @NgModule({
   declarations: [CounterComponent],
   imports: [
     CommonModule,
+    GraphQLModule,
     StoreModule.forFeature(counterFeatureKey, counterReducer),
   ],
   providers: [],
