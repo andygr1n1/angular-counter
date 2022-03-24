@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import {
   increment,
   decrement,
@@ -12,13 +13,11 @@ import { ICounterState } from './store/interfaces';
   templateUrl: './counter.component.html',
   styleUrls: ['./counter.component.scss'],
 })
-export class CounterComponent implements OnInit {
-  count: number | undefined;
+export class CounterComponent {
+  counter$: Observable<ICounterState>;
 
   constructor(private store: Store<{ counter_key: ICounterState }>) {
-    store.select('counter_key').subscribe((counter) => {
-      this.count = counter.count;
-    });
+    this.counter$ = store.select('counter_key');
   }
 
   increment() {
@@ -32,6 +31,4 @@ export class CounterComponent implements OnInit {
   reset() {
     this.store.dispatch(reset());
   }
-
-  ngOnInit(): void {}
 }

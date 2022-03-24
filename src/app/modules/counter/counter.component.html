@@ -1,13 +1,16 @@
-<div class="counter-container flex-col">
-  <div class="text-6xl font-sexy font-bold select-none">{{ count }}</div>
+<div *ngIf="counter$ | async as counter" class="counter-container flex-col">
+  <div class="text-6xl font-sexy font-bold select-none">
+    {{ counter.count }}
+  </div>
   <h1 class="select-none">Super Counter</h1>
   <div class="flex gap-5">
     <button
       (click)="increment()"
       class="cursor-pointer py-2 px-3 rounded-md outline-none focus:outline-none"
     >
-      +</button
-    ><button
+      +
+    </button>
+    <button
       (click)="decrement()"
       class="cursor-pointer py-2 px-3 rounded-md outline-none focus:outline-none"
     >
