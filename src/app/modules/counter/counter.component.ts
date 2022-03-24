@@ -4,8 +4,8 @@ import {
   increment,
   decrement,
   reset,
-} from 'src/app/redux/actions/counter.actions';
-import { ICounterState } from 'src/app/redux/interfaces';
+} from 'src/app/modules/counter/store/actions/counter.actions';
+import { ICounterState } from './store/interfaces';
 
 @Component({
   selector: 'app-counter',
@@ -15,8 +15,8 @@ import { ICounterState } from 'src/app/redux/interfaces';
 export class CounterComponent implements OnInit {
   count: number | undefined;
 
-  constructor(private store: Store<{ counter: ICounterState }>) {
-    store.select('counter').subscribe((counter) => {
+  constructor(private store: Store<{ counter_key: ICounterState }>) {
+    store.select('counter_key').subscribe((counter) => {
       this.count = counter.count;
     });
   }
