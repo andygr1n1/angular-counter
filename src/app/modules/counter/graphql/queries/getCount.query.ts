@@ -1,4 +1,5 @@
-import { gql } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
+import { IGetUsersResponse } from '../types';
 
 export const GetUsers = gql`
   query Users {

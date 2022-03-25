@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, QueryRef } from 'apollo-angular';
+import { CounterModule } from '../counter.module';
 import { GetUsers } from '../graphql/queries/getCount.query';
 import { IGetUsersResponse } from '../graphql/types';
 
