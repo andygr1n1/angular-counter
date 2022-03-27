@@ -1,20 +1,27 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { increment, decrement, reset } from '../actions/counter.actions';
+import {
+  increment,
+  decrement,
+  reset,
+  getUsersCountsSuccess,
+} from '../actions/counter.actions';
 import { ICounterState } from '../interfaces';
 
 export const counterFeatureKey = 'counter_key';
 
-export const initialState: ICounterState = { count: 0 };
+export const initialState: ICounterState[] = [];
 
 export const counterReducer = createReducer(
   initialState,
-  on(increment, (state) => ({
-    count: state.count + 1,
-  })),
-  on(decrement, (state) => ({
-    count: state.count - 1,
-  })),
-  on(reset, (state) => ({ count: 0 }))
+  on(increment, (state) => state),
+  // on(decrement, (state) => ({
+  //   count: state.count - 1,
+  // })),
+  // on(reset, (state) => ({ count: 0 })),
+  on(getUsersCountsSuccess, (state, users_data) => {
+    console.log('red', users_data.data.users);
+    return users_data.data.users;
+  })
 );
 
 // https://ngrx.io/guide/store/reducers

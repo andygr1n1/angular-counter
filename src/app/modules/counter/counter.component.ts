@@ -1,13 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import {
+  debounceTime,
+  fromEvent,
+  interval,
+  mergeMap,
+  Observable,
+  of,
+  switchMap,
+} from 'rxjs';
 import {
   increment,
   decrement,
   reset,
+  apply,
+  getUsersCounts,
 } from 'src/app/modules/counter/store/actions/counter.actions';
 import { CounterService } from './services/counter.service';
-import { ICounterState } from './store/interfaces';
+import { CounterEffects } from './store/effects/counter.effects';
+import { ICounterState, IUsersResponse } from './store/interfaces';
 
 @Component({
   selector: 'app-counter',
@@ -17,10 +28,7 @@ import { ICounterState } from './store/interfaces';
 export class CounterComponent implements OnInit {
   counter$: Observable<ICounterState>;
 
-  constructor(
-    private store: Store<{ counter_key: ICounterState }>,
-    private counterService: CounterService
-  ) {
+  constructor(private store: Store<{ counter_key: ICounterState }>) {
     this.counter$ = store.select('counter_key');
   }
 
@@ -33,10 +41,26 @@ export class CounterComponent implements OnInit {
   }
 
   reset() {
-    this.store.dispatch(reset());
+    // this.store.dispatch(reset());
+  }
+
+  apply() {
+    this.store.dispatch(apply());
   }
 
   ngOnInit(): void {
-    this.counterService.fetchAllHeroes();
+    this.store.dispatch(getUsersCounts());
+  }
+
+  ngAfterViewChecked(): void {
+    const clicker = fromEvent(document.getElementById('reset-btn')!, 'click');
+    const clickerInterval = interval(500);
+
+    clicker
+      .pipe(
+        debounceTime(1000),
+        switchMap((event) => clickerInterval)
+      )
+      .subscribe((value) => console.log(value));
   }
 }

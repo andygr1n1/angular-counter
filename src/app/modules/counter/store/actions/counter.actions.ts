@@ -1,8 +1,25 @@
-import { createAction } from '@ngrx/store';
+import { ApolloQueryResult } from '@apollo/client/core';
+import { createAction, props } from '@ngrx/store';
+import { IGetUsersResponse } from '../../graphql/types';
+import { IUsersResponse } from '../interfaces';
 
 export const increment = createAction('[Counter Component]  increment');
+
 export const decrement = createAction('[Counter Component]  decrement');
+
 export const reset = createAction('[Counter Component]  reset');
+
+export const apply = createAction('[Counter Component]  apply counts');
+
+export const getUsersCounts = createAction('[User Counts]  Get User Counts');
+
+export const getUsersCountsSuccess = createAction(
+  '[User Counts]  Get User Counts Success',
+  (users: ApolloQueryResult<IGetUsersResponse>) => {
+    return users;
+  }
+  // props<{users: ApolloQueryResult<IGetUsersResponse> }>()
+);
 
 // # https://ngrx.io/guide/store/actions --
 // Actions describe unique events that are dispatched from components and services.

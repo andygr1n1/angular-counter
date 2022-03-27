@@ -1,27 +1,36 @@
 # AngularNgrxCounter
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.5.
+Effects in NgRx | Use of NgRx Effects with Angular
+https://ngrx.io/guide/effects
+https://www.youtube.com/watch?v=uyW48EQge-8
 
-## Development server
+# MergeMap ConcatMap
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+https://www.youtube.com/watch?v=r0BE5J8i7zw
+https://www.youtube.com/watch?v=b59tcUwfpWU
 
-## Code scaffolding
+of('1', '2', '3')
+.pipe(mergeMap((num) => of(`the numb is ${num}`)))
+.subscribe(console.log);
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# SwitchMap
 
-## Build
+//-- send new request and cancel the old one --//
+https://www.youtube.com/watch?v=ahogOJEGIOM
+https://www.youtube.com/watch?v=6lKoLwGlglE
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+# ExhaustMap
 
-## Running unit tests
+exhaustMap operator from Rxjs is used where you don't want to make unnecessary calls to the server if the previous call is not finished. exhaustMap can be used in various scenarios like making calls to the server, getting mouse movement data, in the ngRx effects, etc
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+https://www.youtube.com/watch?v=UZ3a17cuN1o
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# Tap
 
-## Further help
+The tap operator from Rxjs is used for Transparently perform actions or side-effects, such as logging or any side task which will not affect the main purpose.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+https://www.youtube.com/watch?v=osSL3IB1Myw
+
+# Take Skip
+

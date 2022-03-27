@@ -1,3 +1,9 @@
 export interface ICounterState {
-    count: number
+  id?: string;
+  counts?: number;
+  name?: string;
+}
+
+export interface IUsersResponse {
+  counts: number;
 }
