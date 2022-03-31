@@ -4,12 +4,15 @@ import {
   decrement,
   reset,
   getUsersCountsSuccess,
+  selectUser,
 } from '../actions/counter.actions';
-import { ICounterState } from '../interfaces';
+import { ICounterState, ICounterUser } from '../interfaces';
 
 export const counterFeatureKey = 'counter_key';
 
-export const initialState: ICounterState[] = [];
+export const initialState: ICounterState = {
+  users: [],
+};
 
 export const counterReducer = createReducer(
   initialState,
@@ -18,9 +21,21 @@ export const counterReducer = createReducer(
   //   count: state.count - 1,
   // })),
   // on(reset, (state) => ({ count: 0 })),
-  on(getUsersCountsSuccess, (state, users_data) => {
-    console.log('red', users_data.data.users);
-    return users_data.data.users;
+  on(getUsersCountsSuccess, (_state, users_data) => {
+    return {
+      selected_user: users_data.data.users[0],
+      users: users_data.data.users,
+    };
+  }),
+  on(selectUser, (state, props) => {
+    console.log('xx', props.user_id);
+    const selected_user = state.users.find((user) => user.id === props.user_id);
+    if (!selected_user) return state;
+
+    return {
+      ...state,
+      selected_user,
+    };
   })
 );
 

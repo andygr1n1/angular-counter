@@ -44,6 +44,8 @@ export class CounterComponent implements OnInit {
     // this.store.dispatch(reset());
   }
 
+  new_user() {}
+
   apply() {
     this.store.dispatch(apply());
   }

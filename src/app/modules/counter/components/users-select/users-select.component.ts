@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ICounterState } from '../../store/interfaces';
+import { selectUser } from '../../store/actions/counter.actions';
+import { ICounterState, ICounterUser } from '../../store/interfaces';
 
 @Component({
   selector: 'app-users-select',
@@ -10,17 +12,33 @@ import { ICounterState } from '../../store/interfaces';
   styleUrls: ['./users-select.component.scss'],
 })
 export class UsersSelectComponent implements OnInit {
-  counter$: Observable<ICounterState[]>;
-  selected_user: string | undefined;
+  counter$: Observable<ICounterState>;
+  users_subscription$: Subscription;
+  // selected_user_subscription$: Subscription;
+  selected_user: string = '';
+  users: ICounterUser[] = [];
+  name: string = 'Andrew';
 
-  constructor(private store: Store<{ counter_key: ICounterState[] }>) {
+  constructor(public store: Store<{ counter_key: ICounterState }>) {
     this.counter$ = store.select('counter_key');
-    this.counter$.subscribe((first_user) => this.selected_user =  first_user[0]?.name);
+    this.users_subscription$ = this.counter$.subscribe((store) => {
+      this.users = store.users;
+    });
   }
 
-  selectionChange(): void {
-    console.log('123213');
+  selectionChange(value: MatSelectChange): void {
+    const user_id: string = value.value;
+    this.selected_user = user_id;
+    this.store.dispatch(selectUser(user_id));
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.counter$.subscribe((store) => {
+      this.selected_user = store.users[0]?.id ?? '';
+    });
+  }
+  ngOnDestroy(): void {
+    this.users_subscription$.unsubscribe();
+    // this.selected_user_subscription$?.unsubscribe();
+  }
 }

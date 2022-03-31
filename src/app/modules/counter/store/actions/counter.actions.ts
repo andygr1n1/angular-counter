@@ -1,7 +1,7 @@
 import { ApolloQueryResult } from '@apollo/client/core';
 import { createAction, props } from '@ngrx/store';
 import { IGetUsersResponse } from '../../graphql/types';
-import { IUsersResponse } from '../interfaces';
+import { ICounterUser, IUsersResponse } from '../interfaces';
 
 export const increment = createAction('[Counter Component]  increment');
 
@@ -19,6 +19,13 @@ export const getUsersCountsSuccess = createAction(
     return users;
   }
   // props<{users: ApolloQueryResult<IGetUsersResponse> }>()
+);
+
+export const selectUser = createAction(
+  '[User Select] Change Selected User',
+  (user_id: string) => {
+    return { user_id };
+  }
 );
 
 // # https://ngrx.io/guide/store/actions --
