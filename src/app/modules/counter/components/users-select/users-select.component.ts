@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { selectUser } from '../../store/actions/counter.actions';
-import { ICounterState, ICounterUser } from '../../store/interfaces';
+import { ICounterState } from '../../store/interfaces';
+import {
+  getSelectedUserS,
+  getUsersS,
+} from '../../store/selectors/counter.selector';
 
 @Component({
   selector: 'app-users-select',
@@ -12,33 +15,24 @@ import { ICounterState, ICounterUser } from '../../store/interfaces';
   styleUrls: ['./users-select.component.scss'],
 })
 export class UsersSelectComponent implements OnInit {
-  counter$: Observable<ICounterState>;
-  users_subscription$: Subscription;
-  // selected_user_subscription$: Subscription;
+  selectedUserSubscription: Subscription | undefined;
   selected_user: string = '';
-  users: ICounterUser[] = [];
-  name: string = 'Andrew';
+  users$ = this.store.pipe(select(getUsersS));
 
-  constructor(public store: Store<{ counter_key: ICounterState }>) {
-    this.counter$ = store.select('counter_key');
-    this.users_subscription$ = this.counter$.subscribe((store) => {
-      this.users = store.users;
-    });
-  }
+  constructor(public store: Store<{ counter_key: ICounterState }>) {}
 
   selectionChange(value: MatSelectChange): void {
     const user_id: string = value.value;
-    this.selected_user = user_id;
     this.store.dispatch(selectUser(user_id));
   }
 
   ngOnInit(): void {
-    this.counter$.subscribe((store) => {
-      this.selected_user = store.users[0]?.id ?? '';
-    });
+    this.selectedUserSubscription = this.store
+      .pipe(select(getSelectedUserS))
+      .subscribe((id) => (this.selected_user = id ?? ''));
   }
+
   ngOnDestroy(): void {
-    this.users_subscription$.unsubscribe();
-    // this.selected_user_subscription$?.unsubscribe();
+    this.selectedUserSubscription?.unsubscribe();
   }
 }

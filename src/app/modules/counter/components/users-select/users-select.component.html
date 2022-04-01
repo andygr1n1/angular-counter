@@ -1,15 +1,15 @@
 <div class="relative flex gap-20 items-center p-10">
   <div class="absolute -left-10 w-10 h-10 bg-yellow-200 rounded-full"></div>
 
+  <!-- *ngIf="counter$ | async as store" -->
   <mat-select
-    *ngIf="counter$ | async as store"
     (selectionChange)="selectionChange($event)"
     placeholder="Select user"
     class="!w-[100px] !min-w-[100px]"
     [(value)]="selected_user"
   >
     <mat-option
-      *ngFor="let user of store.users"
+      *ngFor="let user of users$ | async"
       [value]="user.id"
       [id]="user.id ?? ''"
     >
