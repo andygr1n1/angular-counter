@@ -1,9 +1,12 @@
-<div *ngIf="counter$ | async as store" class="counter-container flex-col">
+<div
+  *ngIf="!(loading$ | async); else elseBlock"
+  class="counter-container flex-col"
+>
   <app-users-select></app-users-select>
   <div
     class="flex items-center justify-center text-6xl font-sexy font-bold select-none h-[200px] w-[200px]"
   >
-    {{ store.selected_user?.counts }}
+    {{ (selected_user$ | async)?.counts }}
   </div>
   <h1 class="select-none">Super Counter</h1>
   <div class="flex gap-5">
@@ -27,7 +30,7 @@
       reset
     </button>
     <button
-      (click)="new_user()"
+      (click)="createNewUser()"
       class="cursor-pointer py-2 px-3 rounded-md outline-none focus:outline-none bg-emerald-500"
       id="reset-btn"
     >
@@ -35,3 +38,8 @@
     </button>
   </div>
 </div>
+
+<ng-template #elseBlock
+  ><div class="w-full h-full flex items-center justify-center bg-[skyblue]">
+    <mat-spinner></mat-spinner></div
+></ng-template>

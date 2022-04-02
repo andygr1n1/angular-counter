@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { MatDialog } from '@angular/material/dialog';
+import { select, Store } from '@ngrx/store';
 import {
   debounceTime,
   fromEvent,
@@ -16,9 +17,11 @@ import {
   apply,
   getUsersCounts,
 } from 'src/app/modules/counter/store/actions/counter.actions';
+import { NewUserComponent } from './components/new-user/new-user.component';
 import { CounterService } from './services/counter.service';
 import { CounterEffects } from './store/effects/counter.effects';
 import { ICounterState, IUsersResponse } from './store/interfaces';
+import { appLoadingSelector, getSelectedUserS } from './store/selectors/counter.selector';
 
 @Component({
   selector: 'app-counter',
@@ -26,9 +29,14 @@ import { ICounterState, IUsersResponse } from './store/interfaces';
   styleUrls: ['./counter.component.scss'],
 })
 export class CounterComponent implements OnInit {
+  loading$ = this.store.pipe(select(appLoadingSelector));
+  selected_user$ = this.store.pipe(select(getSelectedUserS));
   counter$: Observable<ICounterState>;
 
-  constructor(private store: Store<{ counter_key: ICounterState }>) {
+  constructor(
+    private store: Store<{ counter_key: ICounterState }>,
+    private dialog: MatDialog
+  ) {
     this.counter$ = store.select('counter_key');
   }
 
@@ -44,10 +52,15 @@ export class CounterComponent implements OnInit {
     // this.store.dispatch(reset());
   }
 
-  new_user() {}
-
   apply() {
     this.store.dispatch(apply());
+  }
+
+  createNewUser(): void {
+    this.dialog.open(NewUserComponent, {
+      width: '50%',
+      height: '70%',
+    });
   }
 
   ngOnInit(): void {

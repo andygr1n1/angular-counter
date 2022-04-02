@@ -29,7 +29,7 @@ export class UsersSelectComponent implements OnInit {
   ngOnInit(): void {
     this.selectedUserSubscription = this.store
       .pipe(select(getSelectedUserS))
-      .subscribe((id) => (this.selected_user = id ?? ''));
+      .subscribe((user) => (this.selected_user = user?.id ?? ''));
   }
 
   ngOnDestroy(): void {

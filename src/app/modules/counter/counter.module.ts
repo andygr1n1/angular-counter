@@ -11,10 +11,17 @@ import { GraphQLModule } from 'src/graphql/graphql.module';
 import { CounterEffects } from './store/effects/counter.effects';
 import { UsersSelectComponent } from './components/users-select/users-select.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NewUserComponent } from './components/new-user/new-user.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [CounterComponent, UsersSelectComponent],
+  declarations: [CounterComponent, UsersSelectComponent, NewUserComponent],
   imports: [
+    MatProgressSpinnerModule,
+    FormsModule,
+    MatDialogModule,
     MatSelectModule,
     CommonModule,
     GraphQLModule,

@@ -1,4 +1,5 @@
 export interface ICounterState {
+  loading: boolean;
   selected_user?: ICounterUser;
   users: ICounterUser[];
 }

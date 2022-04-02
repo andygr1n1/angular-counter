@@ -11,6 +11,7 @@ import { ICounterState, ICounterUser } from '../interfaces';
 export const counterFeatureKey = 'counter_key';
 
 export const initialState: ICounterState = {
+  loading: true,
   users: [],
 };
 
@@ -21,14 +22,14 @@ export const counterReducer = createReducer(
   //   count: state.count - 1,
   // })),
   // on(reset, (state) => ({ count: 0 })),
-  on(getUsersCountsSuccess, (_state, users_data) => {
+  on(getUsersCountsSuccess, (state, users_data) => {
     return {
+      loading: false,
       selected_user: users_data.data.users[0],
       users: users_data.data.users,
     };
   }),
   on(selectUser, (state, props) => {
-    console.log('xx', props.user_id);
     const selected_user = state.users.find((user) => user.id === props.user_id);
     if (!selected_user) return state;
 

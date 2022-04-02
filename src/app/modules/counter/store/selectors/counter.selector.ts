@@ -11,13 +11,10 @@ export const getUsersS = createSelector(
 
 export const getSelectedUserS = createSelector(
   counter$FeatureSelector,
-  (state: ICounterState) => state.selected_user?.id
+  (state: ICounterState) => state.selected_user
 );
 
-// export const usersSelector = createFeatureSelector<(
-//   (state: ICounterState) => state.users,
-//   (users: Readonly<ICounterUser[]>) => {
-//     console.log('urs', users);
-//     return users;
-//   }
-// );
+export const appLoadingSelector =  createSelector(
+  counter$FeatureSelector,
+  (state: ICounterState) => state.loading
+);

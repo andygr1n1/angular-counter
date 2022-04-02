@@ -1,3 +1,5 @@
+ng serve
+
 # AngularNgrxCounter
 
 Effects in NgRx | Use of NgRx Effects with Angular
